@@ -82,32 +82,22 @@
     let currentInput = "";
   
     buttons.forEach((btn) => {
-      btn.addEventListener("click", async function () {
+      btn.addEventListener("click", () => {
         let value = btn.textContent;
   
         if (value === "=") {
           try {
-            const response = await fetch("http://localhost:3000/calculate", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ expression: currentInput }),
-            });
-  
-            const data = await response.json();
-            display.value = data.result;
-            currentInput = data.result.toString();
-          } catch (error) {
-            display.value = "Error";
+            currentInput = eval(currentInput);
+          } catch {
+            currentInput = "Error";
           }
         } else if (value === "C") {
           currentInput = "";
-          display.value = "";
         } else {
           currentInput += value;
-          display.value = currentInput;
         }
+  
+        display.value = currentInput;
       });
     });
   </script>
